@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/recommendation', function () {
 	return view('recommendation-list');
 });
+
+Route::get('/detail', function() {
+	return view('smartphone-detail');
+});

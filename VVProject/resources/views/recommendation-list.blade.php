@@ -17,7 +17,7 @@
 		        		<div class="animate-box">
 			        		<img src="{{ URL::to('/dummy-data/apple-iphone-7.jpg') }}" alt="filtered smartphone">
 		        		</div>
-		    			<div class="fh5co-desc">Apple iPhone 7 - 128 GB</div>
+		    			<div class="fh5co-desc">Apple iPhone 7</div>
 					</a>
 		    	</div>
 		    	<div class="item">
