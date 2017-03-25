@@ -15,9 +15,15 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
+                    @if (Request::path() == '/')
+                    <li>
+                        <a class="get-recommendation-nav-button" href="{{ url('/about') }}">WHAT AM I ?</a>
+                    </li>
+                    @else
                     <li>
                         <a class="get-recommendation-nav-button" href="{{ url('/') }}">GET RECOMMENDATION</a>
                     </li>
+                    @endif
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -12,8 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+Route::post('/form', 'FormController@show');
 
 Route::get('/recommendation', function () {
 	return view('recommendation-list');
@@ -21,4 +22,8 @@ Route::get('/recommendation', function () {
 
 Route::get('/detail', function() {
 	return view('smartphone-detail');
+});
+
+Route::get('/about', function() {
+	return view('about');
 });
