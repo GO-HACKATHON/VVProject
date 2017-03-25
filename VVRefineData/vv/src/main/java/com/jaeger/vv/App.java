@@ -1,6 +1,7 @@
 package com.jaeger.vv;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
@@ -32,8 +33,8 @@ public class App
 		try {
 //			list = mapper.readValue(new File("C:\\Users\\Zachary\\Downloads\\daftar_hp_google.json"), new TypeReference<List<Smartphone>>(){});
 //			list = mapper.readValue(new File("C:\\Users\\Zachary\\Downloads\\tes.json"), new TypeReference<List<Tes>>(){});
-//			JsonNode rootArray = mapper.readTree(new File("C:\\Users\\Zachary\\Downloads\\daftar_hp_google.json"));
-			JsonNode rootArray = mapper.readTree(new File("x.json"));
+			JsonNode rootArray = mapper.readTree(new File("C:\\Users\\Zachary\\Downloads\\all_hp.json"));
+//			JsonNode rootArray = mapper.readTree(new File("x.json"));
 			
 			for (JsonNode node : rootArray) {
 				String type = node.path("Title").asText();
@@ -54,23 +55,50 @@ public class App
 				String nfc = node.path("NFC").asText().toLowerCase();
 				String announced = node.path("Announced").asText().toLowerCase();
 				String releasedYear = announced.split(" ")[0].split(",")[0];
+				
+
+	        	System.out.println(announced);
+				if(releasedYear.equals("")){
+		    		releasedYear="0";
+		    	}else if(announced.contains("20")){
+		    		String announcement[] = announced.split(" ");
+		    		for(int i=0;i<announcement.length;i++){
+		    			if(announcement[i].contains("20")){
+		    				releasedYear = announcement[i].substring(0,4);	
+		    			}
+	    				System.out.println(releasedYear);
+		    		}
+		    	}else {
+		    		releasedYear="0";
+		    	}
 				String priceGroup = node.path("Price group").asText().toLowerCase();
 				
+
+				System.out.println("Title : " + type);
+				System.out.println("Resolution : " + reso);
+				int photographiclevel = jaeger.photographyCalc(cameraRes,cameraFeature);
+				int gaminglevel = jaeger.gamingCalc(cpu, memory, sensors, releasedYear, reso);
+				jaeger.utilityCalc(batteryLife, gps, nfc, bluetooth, messaging);
 				
-//				int photographiclevel = jaeger.photographyCalc(cameraRes,cameraFeature);
-//				int gaminglevel = jaeger.gamingCalc(cpu, memory, sensors, releasedYear, reso);
-//				jaeger.utilityCalc(batteryLife, gps, nfc, bluetooth, messaging);
+//				String p = node.path("tagPhotography").asText().toLowerCase();
+//				System.out.println(p);
 				
-				String p = node.path("tagPhotography").asText().toLowerCase();
-				System.out.println(p);
-				
-				
+
 				String price;
-				if(priceGroup.contains("EUR")){
+				if(priceGroup.contains("eur")){
 					price = priceGroup.split(" ")[2];
+					int price2 = Integer.valueOf(price)*14500;
+
+					((ObjectNode) node).put("priceinrupiah",price2);
+//					System.out.println(price2);
 				}else{
 					price = "unknown";
+					String price2 = "-";
+
+					((ObjectNode) node).put("priceinrupiah",price2);
 				}
+
+//				System.out.println(priceGroup);
 //				if(jaeger.tagPhotography == true){
 //					((ObjectNode) node).put("tagPhotography","1");
 //					((ObjectNode) node).put("photographylevel",photographiclevel);
@@ -84,22 +112,24 @@ public class App
 				
 				// Categorization 
 //				if()
-//				System.out.println("Title : " + type);
+
+
+//				jaeger.writeFile(type);
 //				System.out.println("PrimaryRes : " + cameraRes);
 ////				System.out.println("GPS : "+ gps);
 ////				System.out.println("NFC : "+ nfc);
 ////				System.out.println("Bluetooth : " + bluetooth);
 //				System.out.println("Price : "+ price);
-//				((ObjectNode) node).put("tagPhotography",jaeger.tagPhotography);
-//				((ObjectNode) node).put("photographylevel",photographiclevel);
-//				((ObjectNode) node).put("tagGaming",jaeger.tagGaming);
-//				((ObjectNode) node).put("gaminglevel",gaminglevel);
-//				((ObjectNode) node).put("tagUtilities",jaeger.tagUtilities);
+				((ObjectNode) node).put("tagPhotography",jaeger.tagPhotography);
+				((ObjectNode) node).put("photographylevel",photographiclevel);
+				((ObjectNode) node).put("tagGaming",jaeger.tagGaming);
+				((ObjectNode) node).put("gaminglevel",gaminglevel);
+				((ObjectNode) node).put("tagUtilities",jaeger.tagUtilities);
 			}
 
 			String resultUpdate = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootArray);
 			System.out.println(resultUpdate);
-//			jaeger.writeFile(resultUpdate);
+			jaeger.writeFile(resultUpdate);
 //	    	System.out.println(rootArray);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -115,10 +145,13 @@ public class App
     }
     
     private String displayCalc(String reso){
+    	if(reso.split(" ").length<2){
+    		return "small screen";
+    	}
     	String resoH = reso.split(" ")[0];
 		String resoV = reso.split(" ")[2];
 
-//		System.out.println("Reso : " + resoH +" x "+resoV);
+		System.out.println("Reso : " + resoH +" x "+resoV);
 		if(Integer.valueOf(resoH)*Integer.valueOf(resoV)>921000){
 			return "big screen";
 		}else{
@@ -132,16 +165,35 @@ public class App
     	// autofocus
     	// HDR
     	
+
+		System.out.println(cameraRes);
     	if(cameraRes.contains("autofocus")){
     		camQuality++;
     	}
-    	String megaPix = cameraRes.split(" ")[0];
-    	if(Float.valueOf(megaPix) >= 5){
-    		tagPhotography = true;
-    		if(Float.valueOf(megaPix) >= 8){
-    			camQuality++;
+    	if(cameraRes.contains("mp")){
+    		String megaPixs[] = cameraRes.split(" ");
+    		String megaPix="0";
+    		for(int i=0;i<megaPixs.length;i++){
+    			if(megaPixs[i].contains("mp")){
+    				megaPix = megaPixs[i-1];
+    				System.out.println(megaPix);
+    				if(megaPix.contains(")")){
+    					megaPix = megaPix.split("d")[1].substring(1);
+    				}
+    				break;
+    			}
     		}
+    		
+        	if(Float.valueOf(megaPix) >= 5){
+        		tagPhotography = true;
+        		if(Float.valueOf(megaPix) >= 8){
+        			camQuality++;
+        		}
+        	}	
+    	}else{
+    		
     	}
+    	
     	if(cameraFeatures.contains("HDR")){
     		camQuality++;
     	}
@@ -154,6 +206,13 @@ public class App
     private int gamingCalc(String cpu, String memory, String sensors, String announced,String reso){
     	// cpu , ram , memory
     	// sensors, gyro, accelerometer
+//    	System.out.println(announced);
+    	
+//    	if(announced.contains(".")){
+//    		announced = announced.substring(0, 3);
+//    	}
+    	System.out.println(memory);
+    	
     	int year = Integer.valueOf(announced);
     	Calendar now = Calendar.getInstance();
     	int yearNow = now.get(Calendar.YEAR);
@@ -164,9 +223,26 @@ public class App
     	tagGaming=false;
     	int gameQuality=0;
     	boolean ramQuality =false;
-		String memoryComponent[] = memory.split(" ");
-		String ram = memory.split(" ")[memoryComponent.length-3];
-    	if(cpu.contains("core")){
+    	String ram = "0";
+    	if(memory.contains("ram")){
+//    		System.out.println(memory);
+    		String memoryComponent[] = memory.split(" ");
+    		for(int i=0;i<memoryComponent.length;i++){
+    			if(memoryComponent[i].equals("ram")){
+//    				ram = memory.split(" ")[memoryComponent.length-3];
+    				ram = memory.split(" ")[i-2];
+    				
+    				if(ram.contains("/")){
+    					ram = ram.split("/")[0];
+    				}
+    				break;
+    			}
+    		}
+    		if(Float.valueOf(ram)> 2 && memory.contains("gb")){
+        		ramQuality = true;
+        	}        		
+    	}
+		if(cpu.contains("core")){
     		String cores = cpu.split("-core")[0];
     		System.out.println(cores);
     		if(cores.toLowerCase().contains("dual")){
@@ -180,9 +256,6 @@ public class App
     		}
     	}else {
     		gameQuality=0;
-    	}
-    	if(Integer.valueOf(ram)> 2){
-    		ramQuality = true;
     	}
     	if(sensors.contains("gyro")){
     		gameQuality++;
@@ -227,7 +300,8 @@ public class App
     
     private void writeFile(String result){
     	try{
-    	    PrintWriter writer = new PrintWriter("x.json", "UTF-8");
+    	    PrintWriter writer = new PrintWriter("refinedSrap.json", "UTF-8");
+//    	    PrintWriter writer = new PrintWriter(new FileWriter("nama.json",true));
     	    writer.println(result);
     	    writer.close();
     	} catch (IOException e) {
