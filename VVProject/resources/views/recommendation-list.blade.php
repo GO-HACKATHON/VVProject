@@ -21,7 +21,7 @@
 					</a>
 		    	</div>
 		    	<div class="item">
-		 			<a href="about.html">
+		 			<a href="{{ url('detail') }}">
 		        		<div class="animate-box">
 		        			<img src="{{ URL::to('/dummy-data/samsung-galaxy-c5.jpg') }}" alt="filtered smartphone">
 		        		</div>

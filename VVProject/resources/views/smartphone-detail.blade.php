@@ -53,8 +53,94 @@
               <div id="home" class="tab-content-detail tab-pane fade in active">
                 <h3>Rekomendasi Penjual</h3>
                 <p>0 Rekomendasi Penjual Ditemukan</p>
-                <div class="content-shop">
-                    
+                <div class="row product-container">
+                <p class="product-e-commerce">Produk dari Bukalapak.com</p>
+                    <div class="col-md-15 col-xs-6">
+                    <a href="">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="{{ URL::to('/dummy-data/apple-iphone-7-tokopedia1.jpg') }}">
+                            </div>
+                            <div class="meta-product">
+                                <div class="product-title">
+                                    <p>Apple IPhone 7 - GSM - 32GB</p>
+                                </div>
+                                <div class="product-price">
+                                    <p>Rp. 10.000.000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-md-15 col-xs-6">
+                    <a href="">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="{{ URL::to('/dummy-data/apple-iphone-7-tokopedia2.jpg') }}">
+                            </div>
+                            <div class="meta-product">
+                                <div class="product-title">
+                                    <p>Apple IPhone 7 - GSM - 32GB</p>
+                                </div>
+                                <div class="product-price">
+                                    <p>Rp. 10.000.000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-md-15 col-xs-6">
+                    <a href="">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="{{ URL::to('/dummy-data/apple-iphone-7-tokopedia3.jpg') }}">
+                            </div>
+                            <div class="meta-product">
+                                <div class="product-title">
+                                    <p>Apple IPhone 7 - GSM - 256GB</p>
+                                </div>
+                                <div class="product-price">
+                                    <p>Rp. 14.120.120</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-md-15 col-xs-6">
+                    <a href="">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="{{ URL::to('/dummy-data/apple-iphone-7-tokopedia4.jpg') }}">
+                            </div>
+                            <div class="meta-product">
+                                <div class="product-title">
+                                    <p>Apple IPhone 7 Plus - GSM - 32GB</p>
+                                </div>
+                                <div class="product-price">
+                                    <p>Rp. 11.000.000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-md-15 col-xs-6">
+                    <a href="">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="{{ URL::to('/dummy-data/apple-iphone-7-tokopedia5.jpg') }}">
+                            </div>
+                            <div class="meta-product">
+                                <div class="product-title">
+                                    <p>Apple IPhone 7 Plus - GSM - 256GB</p>
+                                </div>
+                                <div class="product-price">
+                                    <p>Rp. 17.210.150</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="navigate-to"><a href="" class="btn-see-more">See more at Bukalapak.com >></a></div>
                 </div>
               </div>
               <div id="menu1" class="tab-content-detail tab-pane fade">
