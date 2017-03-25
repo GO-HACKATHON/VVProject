@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>VV - Recommendation List - Smartphone Auto Recommendation</title>
+		<title>VV - Smartphone Auto Recommendation</title>
 
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 		<link rel="shortcut icon" href="favicon.ico">

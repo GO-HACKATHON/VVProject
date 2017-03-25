@@ -360,7 +360,7 @@ h1, h2, h3, h4, h5, h6, figure {
   display: none;
 }
 #fh5co-hero .flexslider .slider-text-bg {
-  background: #317AE1;
+  background: #FFA500;
 }
 @media screen and (max-width: 992px) {
   #fh5co-hero .flexslider .slider-text-bg {
@@ -449,6 +449,11 @@ h1, h2, h3, h4, h5, h6, figure {
 #fh5co-hero .flexslider .slider-text > .slider-text-inner .ct a,
 #fh5co-hero .flexslider .slider-text-bg > .slider-text-inner .ct a {
   color: #fff;
+  padding: 2%;
+  background: black;
+  display: inline;
+  border: 1px solid black;
+  border-radius: 2em;
 }
 #fh5co-hero .flexslider .slider-text > .slider-text-inner .form-inline .form-group,
 #fh5co-hero .flexslider .slider-text-bg > .slider-text-inner .form-inline .form-group {
@@ -1332,3 +1337,10 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 /*# sourceMappingURL=style.css.map */
+.background-container-right {
+  max-width: 50%;
+  display: block;
+  text-align: right;
+  max-height: 100%;
+  background-color: black;
+}
