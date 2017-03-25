@@ -9,63 +9,73 @@ use DB;
 class FormController extends Controller
 {
     //
-    public function show(Request $request)
+	public function clean($string) {
+	   $string = str_replace('"', '-', $string); // Replaces all spaces with hyphens.
+
+	   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+	}
+	public function show(Request $request)
 	{
 		$brand = array('apple','samsung','lg','asus','oppo','huawei','lenovo','nokia','esia','nexian');
-		// $all = $request->all();
-		// var_dump($all);
+
 		$game = $request->input('game');
 		$photography = $request->input('photography');
 		$utility = $request->input('utility');
 		$description = $request->input('description');
 		$description = strtolower($description);
-		
+		$price =$request->input('price');
 		$description = explode(" ",$description);
 
+		$int = (int)$price;
 
-		// echo $title;
-		if($game==NULL){
-			$game = false;
-		}else {
+		$smartphone;
+
+		if($game){
 			$game = true;
-		}
-		if(is_null($photography)){
-			$photography = false;
-		}else {
-			$photography = true;
-		}
-		if(!$utility){
-			$utility = false;
-		}else{
-			$utility = true;
-		}
+			if($game && is_null($photography) && is_null($utility)){
 
-		// echo "game ".$game;
-		// echo " photo ".$photography;
-		// echo " util ".$utility;
-		
-		// var_dump($game);
-		
-		// echo $smartphone;
-		// var_dump($description);
-		foreach ($description as $value) {
-			// echo $value;
-			# code...
-			if (in_array($value, $brand)) {
-				$specific_band = 1;
-				echo $value;
-				# code...
+				$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->get(['Title','UrlPhoto']);
+			}
+			if($game && $photography && is_null($utility)){				//game and photo
+				// echo "game and photo";
+				$photography = true;
+				$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
+
+			}else if($game && $photography && $utility){
+				$photography = true;
+				$utility = true;
+				$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
 			}	
+		}else {
+			if($photography){
+				$photography=true;
+				if(is_null($utility)){
+					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
+				}else {
+					$utility = true;
+					// echo "photo and util";
+					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+				}
+			}else {
+				if($utility){
+					$utility=true;
+					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+				}else {
+					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->get(['Title','UrlPhoto']);
+				}
+
+			}
 		}
-		$smartphone = DB::collection('smartphone')->where('tagGaming',$game)->orWhere('tagPhotography',$photography)->orWhere('tagUtilities',$utility)->get();
-	
-		// $smartphone = DB::collection('smartphone')->where('Title','like','%acer%')->get(['Title']);
-	
+		// dd($smartphone);
+		return view('recommendation-list')->with(compact('smartphone'));
+	}
 
-		// $smartphone = DB::collection('smartphone')->get();
-		echo count($smartphone);
-		echo $smartphone;
-
-
+	public function showDetail($title)
+	{
+		$smartphone = DB::collection('smartphone')->where('Title','=',$title)->first();
+		echo $smartphone['Title'];
+		$result = DB::collection('hasil')->where('title','like',$smartphone['Title'])->get();
+		dd($result);
+		// return view('smartphone-detail')->with(compact('smartphone'));
 	}
 }

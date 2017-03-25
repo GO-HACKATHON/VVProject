@@ -20,10 +20,13 @@ Route::get('/recommendation', function () {
 	return view('recommendation-list');
 });
 
-Route::get('/detail', function() {
-	return view('smartphone-detail');
-});
+// Route::get('/detail/{title}', function() {
+// 	$smartphone = DB::collection('smartphone')->where('Title','=',$title)->first();
+// 		return view('smartphone-detail')->with(compact('smartphone'));
+// });
 
 Route::get('/about', function() {
 	return view('about');
 });
+
+Route::get('/detail/{title}', 'FormController@showDetail');
