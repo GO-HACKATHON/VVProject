@@ -9,7 +9,7 @@ class MainController extends Controller
 {
     public function cobamongo()
     {
-        $users = DB::collection('smartphone')->where('Title', 'like', '%google%')->get();;
+        $users = DB::collection('smartphone')->where('Title', 'like', '%google%')->get();
         return $users;
     }
 }

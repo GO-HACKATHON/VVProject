@@ -92,4 +92,6 @@
             </div>
         </div>
     </body>
+    <script type="text/javascript" src="{{URL::asset('js/jquery-3.2.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('js/DataFromBL.js')}}"></script>
 </html>
