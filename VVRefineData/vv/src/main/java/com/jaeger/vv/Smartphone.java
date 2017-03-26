@@ -1,0 +1,60 @@
+package com.jaeger.vv;
+
+public class Smartphone {
+	private String Title;
+	private String urlPhoto;
+	private String technology;
+	private String _2G_bands;
+	private String kosong;
+	String _3G_bands;
+	String _4G_bands;
+	String speed;
+	String GPRS;
+	String EDGE;
+	String announced;
+	String status;
+	String dimension;
+	String weight;
+	String sim;
+	String type;
+	String size;
+	String resolution;
+	String multiTouch;
+	String protection;
+	String os;
+	String chipset;
+	String CPU;
+	String GPU;
+	String Card_Slot;
+	String internal;
+	String primary;
+	String features;
+	String video;
+	String secondary;
+	String alert_types;
+	String loudspeaker;
+	String _35mm_jack;
+	String WLAN;
+	String bluetooth;
+	String GPS;
+	String NFC;
+	String radio;
+	String USB;
+	String sensors;
+	String messaging;
+	String browser;
+	String java;
+	String stand_by;
+	String talk_time;
+	String music_play;
+	String colors;
+	String SAR_US;
+	String SAR_EU;
+	String price_group;
+	String performance;
+	String display;
+	String camera;
+	String battery_life;
+	
+
+}
