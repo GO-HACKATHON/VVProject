@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('index');
 });
+
 Route::post('/form', 'FormController@show');
 
 Route::get('/recommendation', function () {
@@ -30,3 +31,4 @@ Route::get('/about', function() {
 });
 
 Route::get('/detail/{title}', 'FormController@showDetail');
+
