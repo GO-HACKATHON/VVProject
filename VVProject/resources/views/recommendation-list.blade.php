@@ -5,11 +5,11 @@
 	<div class="container">
 		<div class="row">
 			<h3 class="row-title">Recommendation Result:</h3>
-			<div class="col-md-12 label-caption">Categories :
+			<!-- <div class="col-md-12 label-caption">Categories :
 				<span class="label label-primary-caption">Video and Photography</span>
 				<span class="label label-primary-caption">Games</span>
 				<span class="label label-primary-caption">Utilities</span>
-			</div>
+			</div> -->
 
 		    <div id="fh5co-board" data-columns>
 		    	<!-- <div class="item">

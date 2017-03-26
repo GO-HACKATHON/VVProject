@@ -25,47 +25,101 @@ class FormController extends Controller
 		$description = strtolower($description);
 		$price =$request->input('price');
 		$description = explode(" ",$description);
+		$specific_band = 0;
+		
+		foreach ($description as $value) {
+			
+			# code...
+			if (in_array($value, $brand)) {
+				$specific_band = 1;
+				$value;
+				# code...
+			echo $value;
+			}	
+		}
 
 		$int = (int)$price;
 
 		$smartphone;
-
-		if($game){
+		if($specific_band){
+			if($game){
 			$game = true;
 			if($game && is_null($photography) && is_null($utility)){
 
-				$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->get(['Title','UrlPhoto']);
+				$smartphone = DB::collection('smartphone')->where('Title','like','%'.$value.'%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->get(['Title','UrlPhoto']);
 			}
 			if($game && $photography && is_null($utility)){				//game and photo
 				// echo "game and photo";
 				$photography = true;
-				$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
+				$smartphone = DB::collection('smartphone')->where('Title','like','%'.$value.'%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
 
 			}else if($game && $photography && $utility){
 				$photography = true;
 				$utility = true;
-				$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+				$smartphone = DB::collection('smartphone')->where('Title','like','%'.$value.'%')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+			}	
+		}else{
+			if($photography){
+				$photography=true;
+				if(is_null($utility)){
+					$smartphone = DB::collection('smartphone')->where('Title','like','%'.$value.'%')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
+				}else {
+					$utility = true;
+					// echo "photo and util";
+					$smartphone = DB::collection('smartphone')->where('Title','like','%'.$value.'%')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+				}
+			}else {
+				if($utility){
+					$utility=true;
+					$smartphone = DB::collection('smartphone')->where('Title','like','%'.$value.'%')->where('priceinrupiah','<',$int)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+				}else {
+					$smartphone = DB::collection('smartphone')->where('Title','like','%'.$value	.'%')->where('priceinrupiah','<',$int)->get(['Title','UrlPhoto']);
+				}
+
+			}
+		}
+
+		}else{
+			if($game){
+			$game = true;
+			if($game && is_null($photography) && is_null($utility)){
+
+				$smartphone = DB::collection('smartphone')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->get(['Title','UrlPhoto']);
+			}
+			if($game && $photography && is_null($utility)){				//game and photo
+				// echo "game and photo";
+				$photography = true;
+				$smartphone = DB::collection('smartphone')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
+
+			}else if($game && $photography && $utility){
+				$photography = true;
+				$utility = true;
+				$smartphone = DB::collection('smartphone')->where('priceinrupiah','<',$int)->Where('tagGaming',$game)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
 			}	
 		}else {
 			if($photography){
 				$photography=true;
 				if(is_null($utility)){
-					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
+					$smartphone = DB::collection('smartphone')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->get(['Title','UrlPhoto']);
 				}else {
 					$utility = true;
 					// echo "photo and util";
-					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+					$smartphone = DB::collection('smartphone')->where('priceinrupiah','<',$int)->where('tagPhotography',$photography)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
 				}
 			}else {
 				if($utility){
 					$utility=true;
-					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
+					$smartphone = DB::collection('smartphone')->where('priceinrupiah','<',$int)->where('tagUtilities',$utility)->get(['Title','UrlPhoto']);
 				}else {
-					$smartphone = DB::collection('smartphone')->where('Title','like','%samsung%')->where('priceinrupiah','<',$int)->get(['Title','UrlPhoto']);
+					$smartphone = DB::collection('smartphone')->where('priceinrupiah','<',$int)->get(['Title','UrlPhoto']);
 				}
 
 			}
 		}
+
+		}
+
+		
 		// dd($smartphone);
 		return view('recommendation-list')->with(compact('smartphone'));
 	}
@@ -75,7 +129,7 @@ class FormController extends Controller
 		$smartphone = DB::collection('smartphone')->where('Title','=',$title)->first();
 		echo $smartphone['Title'];
 		$result = DB::collection('hasil')->where('title','like',$smartphone['Title'])->get();
-		dd($result);
-		// return view('smartphone-detail')->with(compact('smartphone'));
+		// dd($result);
+		return view('smartphone-detail')->with(compact('smartphone'));
 	}
 }

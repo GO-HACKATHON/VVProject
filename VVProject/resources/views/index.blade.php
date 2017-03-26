@@ -36,7 +36,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-            <label>Additional Request</label>
+            <label>Prefereable Brand</label>
             <textarea class="form-control" rows="3" name="description"></textarea>
         </div>
       </div>
